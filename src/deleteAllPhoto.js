@@ -30,6 +30,7 @@ const deleteAllPhoto = async (username, password) => {
         api.state.generateDevice(username);
         const auth = await api.account.login(username, password);
         var getMedia = await api.feed.user(auth.pk).items();
+        getMedia.length === 0 ? console.log(chalk `{bold.red Failed media not found}`) : undefined;
         getMedia = _.chunk(getMedia, 10);
         for(i = 0; i < getMedia.length; i++){
             var timeNow = new Date();
