@@ -28,7 +28,7 @@ const question = [
 
 const getToolList = async () => {
     let textLines = [
-    "/$$",                                    
+    " /$$",                                    
     "| $$",                                   
     "| $$        /$$$$$$   /$$$$$$  /$$$$$$$", 
     "| $$       /$$__  $$ /$$__  $$| $$__  $$",
