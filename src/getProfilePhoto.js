@@ -58,9 +58,9 @@ const getProfilePhoto = () => {
         const body = await got(await (await api.user.info(await api.user.getIdByUsername(data.target_username))).profile_pic_url).buffer();
 	    console.log("\n\n"+await terminalImage.buffer(body, {width:30}));
         https.get(await (await api.user.info(await api.user.getIdByUsername(data.target_username))).profile_pic_url, function(response) {
-            response.pipe(fs.createWriteStream(data.target_username + '.png'));
+            response.pipe(fs.createWriteStream('./data/' + data.target_username + '.png'));
         })
-        console.log(data.target_username + '.png downloaded')
+        console.log('./data/' + data.target_username + '.png downloaded')
     })
 }
 module.exports = getProfilePhoto
