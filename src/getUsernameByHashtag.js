@@ -51,11 +51,11 @@ const hastagGetUsername = async (username, password, hash, filename) => {
     var feed = await api.feed.tag(hash, 'recent');
     feed = await feed.items();
     feed.forEach(data => users.add(data['user']['username']))
-    var file = fs.createWriteStream('../data/' + filename + '.txt');
+    var file = fs.createWriteStream('./data/' + filename + '.txt');
     file.on('error', function(err) { if(err) console.log(err)});
     Array.from(users).forEach(function(v) { file.write(v + '\n')});
     file.end();
-    console.log('../data/' + filename + '.txt saved in file')
+    console.log('./data/' + filename + '.txt saved in file')
 }
 process.stdout.write('\033c');
 let textLines = [
