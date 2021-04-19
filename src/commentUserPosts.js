@@ -28,7 +28,15 @@ const question = [{
     type: 'input',
     name: 'target_username',
     message: '[>] Target username:',
-    mask: '*',
+    validate: function(value) {
+        if (!value) return 'Can\'t Empty';
+        return true;
+    }
+},
+{
+    type: 'input',
+    name: 'comment',
+    message: '[>] Text:',
     validate: function(value) {
         if (!value) return 'Can\'t Empty';
         return true;
@@ -38,7 +46,6 @@ const question = [{
     type: 'input',
     name: 'post_count',
     message: '[>] How many posts:',
-    mask: '*',
     validate: function(value) {
         if (!value) return 'Can\'t Empty';
         return true;
@@ -46,7 +53,7 @@ const question = [{
 }]
 
 
-const commentUserPosts = async (username, password, target_username, count) => {
+const commentUserPosts = async (username, password, target_username, count, comment) => {
         api.state.generateDevice(username);
         const auth = await api.account.login(username, password);
         var getMedia = await api.feed.user(await api.user.getIdByUsername(target_username)).items();
@@ -54,8 +61,8 @@ const commentUserPosts = async (username, password, target_username, count) => {
             var timeNow = new Date();
             timeNow = `${timeNow.getHours()}:${timeNow.getMinutes()}:${timeNow.getSeconds()}`
             var callback = '';
-            await api.media.comment({mediaId: getMedia[i]['pk'], text: 'test'}) ? callback = chalk `{bold.green Success}` : callback = chalk `{bold.red Failed}`;
-            console.log(chalk `{magenta ⌭ ${timeNow}}: instagram.com/${getMedia[i]['code']} ➾  Comment: ` + callback);
+            await api.media.comment({mediaId: getMedia[i]['pk'], text: comment}) ? callback = chalk `{bold.green Success}` : callback = chalk `{bold.red Failed}`;
+            console.log(chalk `{magenta ⌭ ${timeNow}}: instagram.com/p/${getMedia[i]['code']} ➾  Comment: ` + callback);
         }
 }
 process.stdout.write('\033c');
@@ -72,4 +79,4 @@ let textLines = [
 textLines.forEach((line) => {
     console.log(line.green)
 })
-inquirer.prompt(question).then(answers => commentUserPosts(answers.username, answers.password, answers.target_username, answers.post_count))
+inquirer.prompt(question).then(answers => commentUserPosts(answers.username, answers.password, answers.target_username, answers.post_count, answers.comment))
