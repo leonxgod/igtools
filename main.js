@@ -1,1 +1,1 @@
-global.getToolList = require('./src/getToolList')();
+require('./src/getToolList')();
